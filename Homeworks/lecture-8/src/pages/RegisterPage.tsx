@@ -1,8 +1,8 @@
 import { Box, Button, TextField, Typography } from "@mui/material"
-import { Formik, FormikHelpers, FormikValues, useFormik } from 'formik'
+import { useFormik } from 'formik'
 import * as yup from 'yup';
 import { register } from "../api/userActions";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const validationSchema = yup.object({
     username: yup
@@ -25,8 +25,7 @@ export const RegisterPage = () => {
         validationSchema: validationSchema,
         onSubmit: async (values) => {
             try {
-                const response = await register(values);
-                console.log(response);
+                await register(values);
                 navigate('/login')
             } catch (err) {
                 console.error(`Error : ${err}`);
@@ -110,6 +109,9 @@ export const RegisterPage = () => {
                     Submit
                 </Button>
 
+                <Button>
+                 <Link to={'/login'}> Login</Link>
+                </Button>
             </Box>
         </Box>
 

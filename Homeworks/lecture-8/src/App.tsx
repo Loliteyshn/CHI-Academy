@@ -1,5 +1,3 @@
-import React from 'react';
-import logo from './logo.svg';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 import { StipePage } from './pages/StipePage';
 import { RegisterPage } from './pages/RegisterPage';
@@ -7,6 +5,7 @@ import { LoginPage } from './pages/LoginPage';
 import { AuthGuard } from './components/AuthGuard';
 import { HomePage } from './pages/HomePage';
 import { AppLayout } from './layouts/AppLayout';
+import { NewPost } from './pages/NewPost';
 
 function App() {
   return (
@@ -20,6 +19,7 @@ function App() {
 
           <Route element={<AuthGuard />}>
             <Route path='/home/:page?' element={<HomePage />} />
+            <Route path='new-post' element={<NewPost />} />
           </Route>
         </Route>
       </Routes>

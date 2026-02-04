@@ -1,12 +1,8 @@
-import { Box, Collapse, Typography } from "@mui/material"
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { Box, Typography } from "@mui/material"
 import { ExhibitType } from "../types/Exhibits";
-import { useState } from "react";
-import { CommentsStripe } from "./CommentStripe";
+import { ExhibitsActions } from "./ExhibitsActions";
 
-export const Exhibit = ({ exhibit }: { exhibit: ExhibitType }) => {
-    const [isOpen, setIsOpen] = useState(false);
-
+export const Exhibit = ({ exhibit, refresh }: { exhibit: ExhibitType, refresh: () => void }) => {
     return (
         <Box
             sx={{
@@ -28,7 +24,7 @@ export const Exhibit = ({ exhibit }: { exhibit: ExhibitType }) => {
                     alignItems: 'center',
                 }}
             >
-                <Typography fontWeight={600}>
+                <Typography fontWeight={600}>   
                     {exhibit.user.username}
                 </Typography>
 
@@ -54,35 +50,8 @@ export const Exhibit = ({ exhibit }: { exhibit: ExhibitType }) => {
                 {exhibit.description}
             </Typography>
 
-            <Box onClick={() => setIsOpen((v) => !v)}
-                sx={{
-                    backgroundColor: 'secondary.main',
-                    p: 1,
-                    borderRadius: 2,
-                    color: '#fff'
-                }}>
-                <Typography
-                    sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        cursor: 'pointer'
-                    }}
-                >
-                    Comments: {exhibit.commentCount}
-                    <KeyboardArrowDownIcon />
-                </Typography>
-            </Box>
+            <ExhibitsActions exhibit={exhibit} refresh={refresh} />
 
-            <Collapse in={isOpen}>
-                <Box sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 1,
-                }}>
-                    <CommentsStripe exhibitId={exhibit.id} />
-                </Box>
-            </Collapse>
         </Box>
     )
 }

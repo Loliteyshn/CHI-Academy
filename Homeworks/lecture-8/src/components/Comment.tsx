@@ -1,41 +1,70 @@
-import { Box, Typography } from "@mui/material"
+import { Box, IconButton, Typography } from "@mui/material"
 import { CommentsResponseType } from "../types/Exhibits"
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
+import DeleteIcon from '@mui/icons-material/Delete';
+import { deleteComment } from "../api/commentsActions";
+import useRequest from "ahooks/lib/useRequest/src/useRequest";
 
 interface CommentType {
-    comments: CommentsResponseType[] | undefined
+    comment: CommentsResponseType
+    exhibitId: number
+    refresh: () => void
 }
-export const Comment = ({ comments }: CommentType) => {
-    return <>
-        {comments?.length == 0 ? <Typography sx={{ p: 2 }}>No Comments</Typography>
-            : comments?.map(comment => (
-                <Box
-                    key={comment.id}
+export const Comment = ({ comment, exhibitId, refresh }: CommentType) => {
+    const isOwner = useSelector((state: RootState) => state.users.userId === comment.user.id);
+    const {run: runDelete} = useRequest((id) => deleteComment(exhibitId, id), {
+        manual: true,
+        onSuccess: () => refresh()
+    });
+
+    return <Box
+        sx={{
+            p: 2,
+            mb: 2,
+            borderRadius: 2,
+            bgcolor: '#fafafa',
+            border: '1px solid #e0e0e0',
+        }}
+    >
+        <Box
+            sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                mb: 1,
+            }}
+        >
+            <Typography fontWeight={600}>
+                {comment.user.username}
+            </Typography>
+
+            <Typography variant="caption" color="text.secondary">
+                {new Date(comment.createdAt).toLocaleString()}
+            </Typography>
+        </Box>
+
+        <Box
+            sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                mb: 1,
+            }}
+        >
+            <Typography>{comment.text}</Typography>
+
+            {isOwner &&
+                <IconButton
                     sx={{
-                        p: 2,
-                        mb: 2,
-                        borderRadius: 2,
-                        bgcolor: '#fafafa',
-                        border: '1px solid #e0e0e0',
+                        color: 'secondary.main',
+                        p: 0,
+                        ml: 1
                     }}
+                    onClick={() => runDelete(comment.id)}
                 >
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            mb: 1,
-                        }}
-                    >
-                        <Typography fontWeight={600}>
-                            {comment.user.username}
-                        </Typography>
+                    <DeleteIcon />
+                </IconButton>
+            }
+        </Box>
+    </Box>
 
-                        <Typography variant="caption" color="text.secondary">
-                            {new Date(comment.createdAt).toLocaleString()}
-                        </Typography>
-                    </Box>
-
-                    <Typography>{comment.text}</Typography>
-                </Box>
-            ))}
-    </>
 }

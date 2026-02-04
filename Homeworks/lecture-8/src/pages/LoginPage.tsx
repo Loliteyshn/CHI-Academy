@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../store/slices/userSlice";
 import { LoginData } from "../types/LoginData";
 import type { AppDispatch, RootState } from "../store/store";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
 
@@ -14,7 +14,7 @@ export const LoginPage = () => {
     const navigate = useNavigate();
     useEffect(() => {
         if (isAuthenticated) {
-            navigate('/home'); // якщо користувач вже залогінений, редирект на /home
+            navigate('/home'); 
         }
     }, [isAuthenticated, navigate]);
 
@@ -25,15 +25,12 @@ export const LoginPage = () => {
         },
         onSubmit: async (values: LoginData) => {
             try {
-                dispatch(loginUser(values))
+                dispatch(loginUser(values));
             } catch (err) {
-                console.log(`Error : ${err}`);
                 formik.setErrors({ password: 'Data is not correct' });
             }
         },
     });
-
-
 
     return (
         <Box
@@ -109,6 +106,10 @@ export const LoginPage = () => {
                     }}
                 >
                     Submit
+                </Button>
+
+                <Button>
+                    Don't have an account? <Link to={'/register'}> Register</Link>
                 </Button>
 
             </Box>

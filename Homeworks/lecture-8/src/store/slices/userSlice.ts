@@ -2,14 +2,6 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { LoginData } from "../../types/LoginData";
 import { getUserProfile, login, removeAuthToken, setAuthToken } from "../../api/userActions";
 
-export type LoginResponse = {
-    access_token: string;
-    refresh_token: string;
-    userId: number;
-    userName: string;
-};
-
-
 const saveToken = (token: string) => {
     localStorage.setItem('token', token)
     setAuthToken(token);
@@ -29,17 +21,13 @@ const getToken = () => {
 const getInitialState = async () => {
     const token = getToken();
     let error = null;
-    console.log(token);
-
 
     if (token) {
         try {
             const userProfile = await getUserProfile(token);
-
-            console.log('profile', userProfile)
             return {
-                userName: userProfile.username,
-                userId: userProfile.id,
+                userName: userProfile?.username,
+                userId: userProfile?.id,
                 isAuthenticated: true,
                 error
             }
@@ -80,7 +68,7 @@ const userSlice = createSlice({
     initialState,
     reducers: {
         logout(state) {
-            localStorage.removeItem('token');
+            removeToken();
             state.userId = null;
             state.userName = null;
             state.isAuthenticated = false;
@@ -93,10 +81,13 @@ const userSlice = createSlice({
                 state.error = null;
             })
             .addCase(loginUser.fulfilled, (state, action) => {
-                state.userName = action.payload.userName;
-                state.userId = action.payload.userId;
-                state.isAuthenticated = true;
-                saveToken(action.payload.access_token);
+                console.log(action.payload);
+                if (action.payload) {
+                    state.userName = action.payload.userName;
+                    state.userId = action.payload.userId;
+                    state.isAuthenticated = true;
+                    saveToken(action.payload.access_token);
+                }
             })
             .addCase(loginUser.rejected, (state, action) => {
                 state.userName = null;
