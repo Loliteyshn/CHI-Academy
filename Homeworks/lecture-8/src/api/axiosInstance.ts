@@ -5,9 +5,16 @@ export const instance = axios.create({
     timeout: 10000,
 })
 
+instance.interceptors.request.use((config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+});
 
 instance.interceptors.response.use(
-    (response) => response.data,
+    (response) => response,
     (error) => {
         if (error.response) {
             const { status } = error.response;

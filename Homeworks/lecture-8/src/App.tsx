@@ -6,23 +6,26 @@ import { AuthGuard } from './components/AuthGuard';
 import { HomePage } from './pages/HomePage';
 import { AppLayout } from './layouts/AppLayout';
 import { NewPost } from './pages/NewPost';
+import NotificationProvider from './providers/Notification';
 
 function App() {
   return (
     <Router>
-      <Routes>
-        <Route path='/register' element={<RegisterPage />} />
-        <Route path='/login' element={<LoginPage />} />
+      <NotificationProvider >
+        <Routes>
+          <Route path='/register' element={<RegisterPage />} />
+          <Route path='/login' element={<LoginPage />} />
 
-        <Route element={<AppLayout />}>
-          <Route path='/:page?' element={<StipePage />} />
+          <Route element={<AppLayout />}>
+            <Route path='/:page?' element={<StipePage />} />
 
-          <Route element={<AuthGuard />}>
-            <Route path='/home/:page?' element={<HomePage />} />
-            <Route path='new-post' element={<NewPost />} />
+            <Route element={<AuthGuard />}>
+              <Route path='/home/:page?' element={<HomePage />} />
+              <Route path='new-post' element={<NewPost />} />
+            </Route>
           </Route>
-        </Route>
-      </Routes>
+        </Routes>
+      </NotificationProvider>
     </Router>
   );
 }

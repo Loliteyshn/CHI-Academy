@@ -38,7 +38,6 @@ export const NewPost = () => {
         onSubmit: async (values: { image: File | null, description: string }, { resetForm }) => {
             try {
                 await addExhibit(values);
-                resetForm();
                 navigate('/home');
             } catch (error) {
                 console.error("Error adding exhibit:", error);

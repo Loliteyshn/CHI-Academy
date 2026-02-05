@@ -3,7 +3,7 @@ import { instance } from "./axiosInstance";
 
 export const fetchComments = async (id: number) => {
     const response = await instance.get(`/api/exhibits/${id}/comments`);
-    return response as unknown as CommentsResponseType[]
+    return response.data as CommentsResponseType[];
 }
 
 export const addComment = async (exhibitId: number, text: string) => {
