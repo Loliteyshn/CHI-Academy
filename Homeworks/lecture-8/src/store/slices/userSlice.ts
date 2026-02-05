@@ -1,20 +1,17 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { LoginData } from "../../types/LoginData";
-import { getUserProfile, login, removeAuthToken, setAuthToken } from "../../api/userActions";
+import { getUserProfile, login, } from "../../api/userActions";
 
 const saveToken = (token: string) => {
     localStorage.setItem('token', token)
-    setAuthToken(token);
 }
 
 const removeToken = () => {
     localStorage.removeItem('token');
-    removeAuthToken()
 }
 
 const getToken = () => {
     const token = localStorage.getItem('token');
-    setAuthToken(token!);
     return token;
 }
 

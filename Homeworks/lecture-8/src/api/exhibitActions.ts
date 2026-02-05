@@ -3,12 +3,12 @@ import { instance } from "./axiosInstance"
 
 export const fetchExhibits = async (page: number = 1) => {
     const response = await instance.get(`/api/exhibits?page=${page}`);
-    return response as unknown as ExhibitsResponseType;
+    return response.data as ExhibitsResponseType;
 }
 
 export const fetchMyExhibits = async (page: number = 1) => {
     const response = await instance.get(`/api/exhibits/my-posts?page=${page}`);
-    return response as unknown as ExhibitsResponseType;
+    return response.data as ExhibitsResponseType;
 }
 
 export const addExhibit = async (data: { description: string, image: File | null }) => {
