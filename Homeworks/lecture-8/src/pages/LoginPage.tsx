@@ -89,7 +89,7 @@ export const LoginPage = () => {
                 />
 
                 <Button
-                    color="primary"
+                    color="secondary"
                     variant="contained"
                     fullWidth
                     type="submit"
@@ -108,7 +108,7 @@ export const LoginPage = () => {
                     Submit
                 </Button>
 
-                <Button>
+                <Button sx={{color: 'secondary.main'}}>
                     Don't have an account? <Link to={'/register'}> Register</Link>
                 </Button>
 

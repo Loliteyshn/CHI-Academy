@@ -90,7 +90,7 @@ export const RegisterPage = () => {
                 />
 
                 <Button
-                    color="primary"
+                    color="secondary"
                     variant="contained"
                     fullWidth
                     type="submit"
@@ -109,7 +109,7 @@ export const RegisterPage = () => {
                     Submit
                 </Button>
 
-                <Button>
+                <Button sx={{color: 'secondary.main'}}>
                  <Link to={'/login'}> Login</Link>
                 </Button>
             </Box>

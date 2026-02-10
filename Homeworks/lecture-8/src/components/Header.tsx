@@ -36,7 +36,10 @@ export default function Header() {
                             dispatch(logout())
                             navigate("/login", { replace: true });
                         }}>Logout</Button>
-                        : <Button color="inherit"><Link style={{ color: '#fff', textDecoration: 'none' }} to={'/login'}>Login</Link></Button>
+                        : <Box>
+                            <Button color="inherit"><Link style={{ color: '#fff', textDecoration: 'none' }} to={'/'}>Home</Link></Button>
+                            <Button color="inherit"><Link style={{ color: '#fff', textDecoration: 'none' }} to={'/login'}>Login</Link></Button>
+                        </Box>
                     }
                 </Toolbar>
             </AppBar>

@@ -13,12 +13,11 @@ function App() {
     <Router>
       <NotificationProvider >
         <Routes>
-          <Route path='/register' element={<RegisterPage />} />
-          <Route path='/login' element={<LoginPage />} />
-
           <Route element={<AppLayout />}>
             <Route path='/:page?' element={<StipePage />} />
-
+            <Route path='/register' element={<RegisterPage />} />
+            <Route path='/login' element={<LoginPage />} />
+            
             <Route element={<AuthGuard />}>
               <Route path='/home/:page?' element={<HomePage />} />
               <Route path='new-post' element={<NewPost />} />
